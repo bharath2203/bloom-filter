@@ -2,8 +2,9 @@ package bloomfilter
 
 import (
 	"fmt"
-	"github.com/spaolacci/murmur3"
 	"hash"
+
+	"github.com/spaolacci/murmur3"
 )
 
 type BloomFilter interface {
@@ -70,9 +71,10 @@ func (b *bfilter) Contains(record string) (bool, error) {
 }
 
 func (b *bfilter) getHashArray(record string) []uint64 {
-	hArray := make([]uint64, 10)
+	hArray := make([]uint64, b.K)
 	recordInBytes := []byte(record)
-	for index := 0; index <= len(b.hashers); index++ {
+	for index := 0; index < b.K; index++ {
+		b.hashers[index].Reset()
 		_, err := b.hashers[index].Write(recordInBytes)
 		if err != nil {
 			return nil
