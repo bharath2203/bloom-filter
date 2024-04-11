@@ -86,6 +86,9 @@ func (b *bfilter) getHashArray(record string) []uint64 {
 	return hArray
 }
 
+// bitset is a data stucture, which will set the kth bit and returns if the kth bit is set when asked.
+// Size of the bitset is defined when instantiating the data structure
+// It optimizes the memory by using single uint64 to hold 64 bits Space complexity O(N/64)
 type bitset struct {
 	cap     uint64
 	bitList []uint64
